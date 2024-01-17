@@ -1,6 +1,23 @@
+import { useEffect } from 'react';
 import '../../src/App.css';
 
 const ShowTask = ({ taskList, setTaskList, task, setTask }) => {
+
+	//fetch the todos from API
+	useEffect(() => {
+		async function fetchTodo() {
+			try {
+				const response = await fetch(
+					'https://jsonplaceholder.typicode.com/todos'
+				);	
+				const data = response.json();
+				setTaskList(data);
+			} catch (error) {
+				
+			}
+		}
+	},[])
+
 	const clearAll = () => {
 		setTaskList([]);
     };
@@ -34,8 +51,8 @@ const ShowTask = ({ taskList, setTaskList, task, setTask }) => {
 					{taskList.map((todo) => (
 						<li key={todo.id}>
 							<p>
-								<span className="name">{todo.name}</span>
-								<span className="time">{todo.time}</span>
+								<span className="name">{todo.title}</span>
+								
 							</p>
 							<i className="bi bi-pencil-square" onClick={()=>handleEdit(todo.id)}></i>
 							<i className="bi bi-trash" onClick={()=>handleDelete(todo.id)}></i>
